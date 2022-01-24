@@ -1,0 +1,43 @@
+{% extends 'layout-admin.html' %}
+{% block title %}
+<title>All Quotes</title>
+{% endblock%}
+
+{% block main_content %}
+<div class="container">
+    <div class="row">
+
+        <div class="col-md-10 offset-md-1">
+            <h1 class="text-center">All Quotes</h1>
+            {% include 'messages.html' %}
+            <div class="card py-2 px-2">
+                <a class="btn btn-primary btn-sm ms-auto"
+                href="/pickabook/quotes_form"
+                >Add New Quote</a>
+                <table class="table-striped">
+                    <tr>
+                        <th>Quote Description</th>
+                        <th>Authors</th>
+                        <th>Date</th>
+                        <th>Actions</th>
+                    </tr>
+                    {% for i in quotes %}
+                    <tr>
+                        <td> {{ i.quote_description }}</td>
+                        <td> {{ i.quote_author }}</td>
+                        <td> {{ i.created_date }}</td>
+                        <td><a class="btn btn-primary btn-sm my-1" href="/pickabook/update_quote/{{i.id}}">Edit</a> &nbsp;
+                            <a class="btn btn-danger btn-sm my-1"
+                               href="/pickabook/delete_quote/{{i.id}}"
+                               onclick="return confirm('Are you sure want to delete this category?')" >Delete</a></td>
+
+                    </tr>
+                    {% endfor %}
+
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
