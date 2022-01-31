@@ -26,10 +26,10 @@
                                         Browse
                                     </a>
                                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                        <li><a class="dropdown-item" href="#">Recommendation</a></li>
+                                        <li><a class="dropdown-item" href="/pickabook/recommend" >Recommendations</a></li>
                                         <li><a class="dropdown-item" href="#">Choice Awards</a></li>
                                         <li><a class="dropdown-item" href="#">Lists</a></li>
-                                        <li><a class="dropdown-item" href="#">Explore</a></li>
+                                        <li><a class="dropdown-item" href="/pickabook/explore">Explore</a></li>
                                         <li><a class="dropdown-item" href="/pickabook/genres">Genres</a></li>
                                     </ul>
                                 </li>
@@ -39,6 +39,7 @@
                                         Community
                                     </a>
                                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        <li><a class="dropdown-item" href="/pickabook/news">News & Interviews</a></li>
                                         <li><a class="dropdown-item" href="/pickabook/quotes">Quotes</a></li>
                                         <li><a class="dropdown-item" href="#">Creative Writing</a></li>
                                         <li><a class="dropdown-item" href="#">Quizzes</a></li>
@@ -80,12 +81,12 @@
                                 <li class="nav-item dropdown">
                                     <a class="nav-link" href="#" id="navbarDropdown" role="button"
                                        data-bs-toggle="dropdown" aria-expanded="false">
-                                        <img src="{% static 'images/t2.png' %}" alt="" class="rounded-circle"
-                                             style="width: 48px; height: 48px;">
+                                        <button type="button" class="btn " style="font-size:24px;"><img src="/{{request.user.profile.profile_pic}}" class="rounded-circle"
+                                                                        width="40" class="img-fluid"> {{user.username}}</button>
                                     </a>
                                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                        <li><a class="dropdown-item" href="#">My Profile</a></li>
-                                        <li><a class="dropdown-item" href="#">Settings</a></li>
+                                        <li><a class="dropdown-item" href="/accounts/profile">My Profile</a></li>
+                                        <li><a class="dropdown-item" href="/accounts/password_change">Settings</a></li>
                                         <li><a class="dropdown-item" href="/accounts/logout">Sign out</a></li>
                                     </ul>
                                 </li>
