@@ -8,6 +8,8 @@ urlpatterns = [
     path('homepage', views.homepage),
     path('get_quote', views.get_quotes),
     path('quotes_form', views.Quote_Form),
+    path('get_news', views.get_news),
+    path('news_form', views.news_form),
     path('update_quote/<int:quote_id>', views.update_quotes),
     path('delete_quote/<int:quote_id>', views.delete_quote),
     path('category_form', views.category_form),

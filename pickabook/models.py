@@ -35,12 +35,25 @@ class Books(models.Model):
         return self.Book_title
 
 
+
 class Book_detail(models.Model):
     objects = None
     book = models.ForeignKey(Books, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
         return self.Book_ID
+
+
+class News(models.Model):
+    objects = None
+    title = models.CharField(max_length=500, null=True)
+    image = models.ImageField(upload_to='static/uploads', null=True)
+    video = models.FileField(upload_to='static/uploads', null=True)
+    description= models.TextField()
+    created_date = models.DateTimeField(auto_now_add=True, null=True)
+
+    def __str__(self):
+        return self.title
 
 
 

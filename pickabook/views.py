@@ -2,9 +2,9 @@ from django.contrib import messages
 from django.shortcuts import render, redirect
 
 from accounts.auth import unauthenticated_user
-from .forms import QuoteForm, CategoryForm, BooksForm
+from .forms import QuoteForm, CategoryForm, BooksForm, NewsForm
 # from django.contrib import messages
-from .models import Quotes,Category, Books
+from .models import Quotes, Category, Books, News
 from accounts.auth import unauthenticated_user, admin_only, user_only
 
 from django.contrib.auth.decorators import login_required
@@ -154,4 +154,29 @@ def get_books(request):
     }
     return render(request, 'pickabook/get_books.html', context)
 
+@admin_only
+def news_form(request):
+    if request.method=="POST":
+        form = NewsForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            messages.add_message(request, messages.SUCCESS, "News added succesfully")
+            return redirect("/pickabook/get_news")
+        else:
+            messages.add_message(request, messages.ERROR, "unable to add Book")
+            return render(request, 'pickabook/news_form.html', {'form_news': form})
+    context = {
+        'form_news': NewsForm,
+        'activate_news': 'active'
+    }
 
+    return render(request, 'pickabook/news_form.html', context)
+
+@admin_only
+def get_news(request):
+    news= News.objects.all().order_by('-id')
+    context={
+        'news':news,
+        'activate_news': 'active'
+    }
+    return render(request, 'pickabook/get_news.html', context)
