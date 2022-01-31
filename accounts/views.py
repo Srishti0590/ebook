@@ -7,14 +7,16 @@ from django.contrib import messages, auth
 from accounts.auth import unauthenticated_user, admin_only, user_only
 from django.contrib.auth.decorators import login_required
 
-from accounts.forms import RegisterForm
+from accounts.forms import RegisterForm, ProfileForm
+from .models import Profile
+
 
 # @user_only
 # def homepage(request):
 #     context = {
 #         "activate_home": 'active'
 #     }
-#     return render(request, 'pickabook/homepage.html', context)
+#     return render(request, 'accounts/homepage.html', context)
 
 
 @unauthenticated_user
@@ -27,7 +29,7 @@ def login(request):
             if not user.is_staff:
                 auth.login(request, user)
                 messages.success(request,"Welcome to Ebook")
-                return redirect('/pickabook/home')
+                return redirect("/pickabook/home")
             elif user.is_staff:
                 auth.login(request, user)
                 return redirect('/admins/dashboard')
@@ -48,7 +50,8 @@ def register_user(request):
     if request.method == "POST":
         form = RegisterForm(request.POST)
         if form.is_valid():
-            form.save()
+            user=form.save()
+            Profile.objects.create(user=user, username=user.username)
             messages.add_message(request, messages.SUCCESS, 'User registered successfully')
             return redirect('/accounts/login')
         else:
@@ -76,7 +79,7 @@ def password_change_user(request):
             user = form.save()
             update_session_auth_hash(request, user)
             messages.add_message(request, messages.SUCCESS, 'Password has been changed Successfully')
-            return redirect('/password_change_user')
+            return redirect('/accounts/password_change_user')
         else:
             messages.add_message(request, messages.ERROR, 'Something went wrong')
             return render(request, 'accounts/password_change_user.html', {'password_change_form': form})
@@ -86,3 +89,20 @@ def password_change_user(request):
         'activate_password': 'active'
     }
     return render(request, 'accounts/password_change_user.html', context)
+
+
+@login_required
+@user_only
+def profile(request):
+    profile = request.user.profile
+    if request.method == "POST":
+        form = ProfileForm(request.POST, request.FILES, instance=profile)
+        if form.is_valid():
+            form.save()
+            messages.add_message(request, messages.SUCCESS, "Profile Updated Successfully")
+            return redirect('/accounts/profile')
+    context = {
+        'form': ProfileForm(instance=profile),
+        'activate_profile': 'active'
+    }
+    return render(request, 'accounts/profile.html', context)

@@ -8,7 +8,6 @@ from .models import Profile
 #     username = forms.CharField()
 #     password = forms.CharField(widget=forms.PasswordInput)
 
-
 class RegisterForm(UserCreationForm):
     class Meta:
         model = User
@@ -20,7 +19,6 @@ class ProfileForm(ModelForm):
         model = Profile
         fields = '__all__'
         exclude = ['user', 'username', 'email']
-
 
 
 
