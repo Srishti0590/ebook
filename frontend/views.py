@@ -1,8 +1,9 @@
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 from accounts.auth import user_only
-from pickabook.models import Quotes, Category, Books
+from pickabook.models import Quotes, Category, Books, News
 
 
 @login_required
@@ -41,6 +42,24 @@ def show_books(request, category_id):
     return render(request, 'frontend/show_books.html', context)
 
 
+def all_books(request):
+    book = Books.objects.all().order_by('-id')
+    context = {
+        'book': book,
+        'activate_book': 'active'
+    }
+    return render(request, 'frontend/all_books.html', context)
+
+
+def recommend(request, pk):
+    book = Books.objects.get(pk=6)
+    context = {
+        'book': book,
+        'activate_book': 'active'
+    }
+    return render(request, 'frontend/all_books.html', context)
+
+
 def book_detail(request, ):
     book = Books.objects.get
     context = {
@@ -48,3 +67,15 @@ def book_detail(request, ):
         'activate_book_detail': 'active'
     }
     return render(request, 'frontend/book_detail.html', context)
+
+
+def show_news(request):
+    news = News.objects.all().order_by('-id')
+    context = {
+        'news': news,
+        'activate_news': 'active'
+    }
+    return render(request, 'frontend/show_news.html', context)
+
+
+

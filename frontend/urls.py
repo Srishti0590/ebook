@@ -6,7 +6,10 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('home', views.homepage, name='my_homepage'),
     path('quotes', views.show_quotes),
+    path('explore', views.all_books),
+    path('recommend/<int:pk>', views.recommend),
     path('genres', views.show_categories),
     path('books/<int:category_id>', views.show_books ),
-    path('book', views.book_detail )
+    path('book', views.book_detail),
+    path('news', views.show_news)
 ]
